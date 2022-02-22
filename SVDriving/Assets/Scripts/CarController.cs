@@ -7,6 +7,7 @@ public class CarController : MonoBehaviour
 {
     private float HorizontalInput;
     private float VerticalInput;
+    private bool IncreaseSpeed;
     private float CarSteeringAngle;
     private bool BreakingState;
     public float MaxSteeringAngle = 25f;
@@ -24,38 +25,61 @@ public class CarController : MonoBehaviour
     public Transform RearRightWheelTransform;
 
 
-    private void FixedUpdate()
+    private void Update()
     {
         GetDriverInput();
         MotorandSteering();
+        PassWheelValues();
         Breaking();
-        UpdateWheels();
     }
 
 
-    GetDriverInput()
+    private void GetDriverInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        HorizontalInput = Input.GetAxis("Horizontal");
+        VerticalInput = Input.GetAxis("Vertical");
         BreakingState = Input.GetKey(KeyCode.Space);
-        Increasespeed = Input.GetKey(KeyCode.LeftShift);
+        IncreaseSpeed = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void MotorandSteering()
     {
-        SteeringAngle = maxSteeringAngle * HorizontalInput;
+        CarSteeringAngle = MaxSteeringAngle * HorizontalInput;
 
-        FrontLeftWheelCollider.steerAngle = CarSteeringAngle // wheel coliders in unity have the property steerAngle which is being set to the cars current steering angle for each wheel.
+        FrontLeftWheelCollider.steerAngle = CarSteeringAngle; // wheel coliders in unity have the property steerAngle which is being set to the cars current steering angle for each wheel.
         FrontRightWheelCollider.steerAngle = CarSteeringAngle;
 
-        FrontLeftWheelCollider.motorTorque = verticalInput * EngineForce;
-        FrontRightWheelCollider.motorTorque = verticalInput * EngineForce;
+        FrontLeftWheelCollider.motorTorque = VerticalInput * EngineForce;
+        FrontRightWheelCollider.motorTorque = VerticalInput * EngineForce;
+
+    }
+    private void PassWheelValues()
+    {
+        UpdateAllWheels(FrontLeftWheelCollider, FrontLeftWheelTransform);
+        UpdateAllWheels(FrontRightWheelCollider, FrontRightWheelTransform);
+        UpdateAllWheels(RearLeftWheelCollider, RearLeftWheelTransform);
+        UpdateAllWheels(RearRightWheelCollider, RearRightWheelTransform);
+    }
+
+
+
+
+
+    private void UpdateAllWheels(WheelCollider wheelcollider, Transform transform )
+    {
+        Quaternion WRotation;
+        Vector3 WPosition;
+
+        wheelcollider.GetWorldPose(out WPosition, out WRotation);
+        transform = wheelcollider.transform.GetChild(0);
+        transform.rotation = WRotation;
+        transform.position = WPosition;
 
     }
 
     private void Breaking()
     {
-        if (isBreaking = true)
+        if (BreakingState = true)
         {
             FrontLeftWheelCollider.brakeTorque = BrakeForce;
             FrontRightWheelCollider.brakeTorque = BrakeForce;
@@ -63,7 +87,7 @@ public class CarController : MonoBehaviour
             RearRightWheelCollider.brakeTorque = BrakeForce;
         }
     }
-
+    
 
 
 
