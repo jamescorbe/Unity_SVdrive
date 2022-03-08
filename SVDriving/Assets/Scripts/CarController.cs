@@ -52,7 +52,7 @@ public class CarController : MonoBehaviour
 
         FrontLeftWheelCollider.steerAngle = CarSteeringAngle; // wheel coliders in unity have the property steerAngle which is being set to the cars current steering angle for each wheel.
         FrontRightWheelCollider.steerAngle = CarSteeringAngle;
-        CurrentSpeed = VerticalInput * EngineForce;
+        CurrentSpeed = (VerticalInput*2) * EngineForce;
 
         FrontLeftWheelCollider.motorTorque = CurrentSpeed;
         FrontRightWheelCollider.motorTorque = CurrentSpeed;
@@ -98,6 +98,7 @@ public class CarController : MonoBehaviour
         RearLeftWheelCollider.brakeTorque = ActiveBreakForce;
         RearRightWheelCollider.brakeTorque = ActiveBreakForce;
     }
+
     
 
 
