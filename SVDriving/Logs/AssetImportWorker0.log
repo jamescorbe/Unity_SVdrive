@@ -165,3 +165,4 @@ Received Import Request.
   path: Assets/Scenes/Login.unity
   artifactKey: Guid(4850265df682d9c439729adcac3d4147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scenes/Login.unity using Guid(4850265df682d9c439729adcac3d4147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '970669bbb64c51af3dd78d583308229a') in 0.008602 seconds 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
