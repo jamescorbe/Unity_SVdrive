@@ -10,10 +10,10 @@ public class PlayButtonScript : MonoBehaviour
 	void Start()
 	{
 		yourButton = GetComponent<Button>();
-		yourButton.onClick.AddListener(playBobbyPlatformGame);
+		yourButton.onClick.AddListener(selectmode);
 	}
 
-	void playBobbyPlatformGame()
+	void selectmode ()
 	{
 		Debug.Log("You have clicked the play button!");
 		SceneManager.LoadSceneAsync("Scenes/Level 1");
