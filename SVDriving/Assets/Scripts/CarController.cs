@@ -56,6 +56,8 @@ public class CarController : MonoBehaviour
 
         FrontLeftWheelCollider.motorTorque = CurrentSpeed;
         FrontRightWheelCollider.motorTorque = CurrentSpeed;
+        RearLeftWheelCollider.motorTorque = CurrentSpeed;
+        RearRightWheelCollider.motorTorque = CurrentSpeed;
     }
     private void UpdateAllWheels( )
     {
