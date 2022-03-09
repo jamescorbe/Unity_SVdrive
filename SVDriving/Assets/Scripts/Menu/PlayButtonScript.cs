@@ -11,6 +11,7 @@ public class PlayButtonScript : MonoBehaviour
 	{
 		yourButton = GetComponent<Button>();
 		yourButton.onClick.AddListener(selectmode);
+		yourButton.onClick.AddListener(selectmode);
 	}
 
 	void selectmode ()
