@@ -13,11 +13,15 @@ public class CarController : MonoBehaviour
     public float MaxSteeringAngle;
     public float ActiveBreakForce;
     public float Maxspeed;
+    public Rigidbody rb;
+    public float downforce = 10.5f;
 
     [SerializeField] public float EngineForce;
     [SerializeField] public float CurrentSpeed;
     [SerializeField] private float BrakeForce;
 
+
+    [SerializeField] public BoxCollider carbody;
     [SerializeField] public WheelCollider FrontLeftWheelCollider;// setting wheel colliders
     [SerializeField] public WheelCollider FrontRightWheelCollider;
     [SerializeField] public WheelCollider RearLeftWheelCollider;
@@ -54,10 +58,12 @@ public class CarController : MonoBehaviour
         FrontRightWheelCollider.steerAngle = CarSteeringAngle;
         CurrentSpeed = (VerticalInput) * EngineForce;
 
+        rb = GetComponent<Rigidbody>();
+        rb.AddForce(0, 0, downforce, ForceMode.Impulse);
         FrontLeftWheelCollider.motorTorque = CurrentSpeed;
         FrontRightWheelCollider.motorTorque = CurrentSpeed;
-        RearLeftWheelCollider.motorTorque = CurrentSpeed;
-        RearRightWheelCollider.motorTorque = CurrentSpeed;
+        RearLeftWheelCollider.motorTorque = CurrentSpeed*2;
+        RearRightWheelCollider.motorTorque = CurrentSpeed*2;
     }
     private void UpdateAllWheels( )
     {
