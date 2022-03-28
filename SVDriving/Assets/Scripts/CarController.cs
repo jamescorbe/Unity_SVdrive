@@ -14,7 +14,7 @@ public class CarController : MonoBehaviour
     public float ActiveBreakForce;
     public float Maxspeed;
     public Rigidbody rb;
-    public float downforce = 10.5f;
+    public float downforce = 300.5f;
 
     [SerializeField] public float EngineForce;
     [SerializeField] public float CurrentSpeed;
@@ -44,6 +44,7 @@ public class CarController : MonoBehaviour
 
     private void GetDriverInput()
     {
+       
         HorizontalInput = Input.GetAxis("Horizontal");
         VerticalInput = Input.GetAxis("Vertical");
         BreakingState = Input.GetKey(KeyCode.Space);
@@ -59,8 +60,8 @@ public class CarController : MonoBehaviour
         CurrentSpeed = (VerticalInput) * EngineForce;
 
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(0, 0, downforce, ForceMode.Impulse);
-        FrontLeftWheelCollider.motorTorque = CurrentSpeed;
+        rb.AddForce(0, 0, downforce, ForceMode.Impulse); // to Improve controll of the car a constant downforce is applied
+        FrontLeftWheelCollider.motorTorque = CurrentSpeed; // updating the motorTorque on the wheel colliders to make the car move when w or s is pressed.
         FrontRightWheelCollider.motorTorque = CurrentSpeed;
         RearLeftWheelCollider.motorTorque = CurrentSpeed*2;
         RearRightWheelCollider.motorTorque = CurrentSpeed*2;
@@ -75,17 +76,17 @@ public class CarController : MonoBehaviour
 
     private void updateonewheel(WheelCollider Wcollider, Transform Wtransform)
     {
-        Quaternion WRotation;
-        Vector3 WPosition;
+        Quaternion WRotation; // wheel rotation
+        Vector3 WPosition; // wheel position
 
-        Wcollider.GetWorldPose(out WPosition, out WRotation);
+        Wcollider.GetWorldPose(out WPosition, out WRotation); //getting the position and rotation of the current wheel 
 
-        Wtransform.rotation = WRotation;
+        Wtransform.rotation = WRotation;// updating the transform rotation and then position in the scene.
         Wtransform.position = WPosition;
 
     }
 
-    private void Breaking()
+    private void Breaking() // when space is pressed the breaking function is called setting ActiveBreakForce
     {
        
         if (BreakingState == true)
@@ -99,7 +100,7 @@ public class CarController : MonoBehaviour
         }
         Usebreak();
     }
-    private void Usebreak ()
+    private void Usebreak () // once the breaking state is checked and ActiveBreakForce is set it is applied to the wheel coliders with the .breakTorque function.
     {
         FrontLeftWheelCollider.brakeTorque = ActiveBreakForce;
         FrontRightWheelCollider.brakeTorque = ActiveBreakForce;
